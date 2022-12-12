@@ -139,8 +139,8 @@ InstallVbeShim (
     // We managed to allocate the page at zero. SVN r14218 guarantees that it
     // is NUL-filled.
     //
-    ASSERT (Int0x10->Segment == 0x0000);
-    ASSERT (Int0x10->Offset  == 0x0000);
+    //ASSERT (Int0x10->Segment == 0x0000);
+    //ASSERT (Int0x10->Offset  == 0x0000);
   }
 
   //
