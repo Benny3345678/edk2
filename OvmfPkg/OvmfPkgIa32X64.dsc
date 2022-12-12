@@ -25,6 +25,7 @@
   SKUID_IDENTIFIER               = DEFAULT
   FLASH_DEFINITION               = OvmfPkg/OvmfPkgIa32X64.fdf
 
+  PCD_DYNAMIC_AS_DYNAMICEX       = TRUE
   #
   # Defines for default states.  These can be changed on the command line.
   # -D FLAG=VALUE
@@ -46,8 +47,8 @@
   DEFINE NETWORK_TLS_ENABLE             = FALSE
   DEFINE NETWORK_IP6_ENABLE             = FALSE
   DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
-  DEFINE NETWORK_ALLOW_HTTP_CONNECTIONS = TRUE
-  DEFINE NETWORK_ISCSI_ENABLE           = TRUE
+  DEFINE NETWORK_ALLOW_HTTP_CONNECTIONS = FALSE
+  DEFINE NETWORK_ISCSI_ENABLE           = FALSE
 
 !include NetworkPkg/NetworkDefines.dsc.inc
 
@@ -604,7 +605,7 @@
 #
 ################################################################################
 
-[PcdsDynamicDefault]
+[PcdsDynamicExDefault]
   # only set when
   #   ($(SMM_REQUIRE) == FALSE)
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvStoreReserved|0
@@ -718,7 +719,10 @@
     <LibraryClasses>
       PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
   }
-  MdeModulePkg/Core/DxeIplPeim/DxeIpl.inf
+  MdeModulePkg/Core/DxeIplPeim/DxeIpl.inf {
+    <LibraryClasses>
+      NULL|MdeModulePkg/Library/LzmaCustomDecompressLib/LzmaCustomDecompressLib.inf
+  }
 
   OvmfPkg/PlatformPei/PlatformPei.inf
   UefiCpuPkg/Universal/Acpi/S3Resume2Pei/S3Resume2Pei.inf {
@@ -735,6 +739,16 @@
   UefiCpuPkg/CpuMpPei/CpuMpPei.inf
 
 !include OvmfPkg/Include/Dsc/OvmfTpmComponentsPei.dsc.inc
+
+#
+# UPL Support
+#
+  UefiPayloadPkg/PayloadLoaderPeim/PayloadLoaderPeim.inf {
+    #<LibraryClasses>
+    #  NULL|$(PLATFORM_BOARD_PACKAGE)/Features/UplRestricted/Library/PeiPayloadHookLib.inf
+    <BuildOptions>
+      GCC:*_*_*_CC_FLAGS = -Wno-error=unused-but-set-variable
+  }
 
 [Components.X64]
   #

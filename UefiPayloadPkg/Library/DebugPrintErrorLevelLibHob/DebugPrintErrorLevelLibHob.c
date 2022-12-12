@@ -17,7 +17,7 @@
 #include <UniversalPayload/UniversalPayload.h>
 
 STATIC UINT32   gDebugPrintErrorLevel;
-STATIC BOOLEAN  gDebugPrintErrorLevelInitialized = FALSE;
+//STATIC BOOLEAN  gDebugPrintErrorLevelInitialized = FALSE;
 
 /**
   Returns the debug print error level mask for the current module.
@@ -31,11 +31,13 @@ GetDebugPrintErrorLevel (
   VOID
   )
 {
-  VOID                                  *GuidHob;
-  UNIVERSAL_PAYLOAD_GENERIC_HEADER      *GenericHeader;
-  UEFI_PAYLOAD_DEBUG_PRINT_ERROR_LEVEL  *DebugPrintErrorLevel;
+  //VOID                                  *GuidHob;
+  //UNIVERSAL_PAYLOAD_GENERIC_HEADER      *GenericHeader;
+  //UEFI_PAYLOAD_DEBUG_PRINT_ERROR_LEVEL  *DebugPrintErrorLevel;
 
-  if (!gDebugPrintErrorLevelInitialized) {
+  gDebugPrintErrorLevel = 0x80000042;
+
+  /*if (!gDebugPrintErrorLevelInitialized) {
     gDebugPrintErrorLevelInitialized = TRUE;
     gDebugPrintErrorLevel            = PcdGet32 (PcdDebugPrintErrorLevel);
     GuidHob                          = GetFirstGuidHob (&gEdkiiDebugPrintErrorLevelGuid);
@@ -52,7 +54,7 @@ GetDebugPrintErrorLevel (
         }
       }
     }
-  }
+  }*/
 
   return gDebugPrintErrorLevel;
 }

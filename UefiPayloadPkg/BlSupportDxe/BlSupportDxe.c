@@ -106,7 +106,7 @@ BlDxeEntryPoint (
   EFI_STATUS                 Status;
   EFI_HOB_GUID_TYPE          *GuidHob;
   EFI_PEI_GRAPHICS_INFO_HOB  *GfxInfo;
-  ACPI_BOARD_INFO            *AcpiBoardInfo;
+  //ACPI_BOARD_INFO            *AcpiBoardInfo;
 
   Status = EFI_SUCCESS;
   //
@@ -135,14 +135,14 @@ BlDxeEntryPoint (
   //
   // Set PcdPciExpressBaseAddress and PcdPciExpressBaseSize by HOB info
   //
-  GuidHob = GetFirstGuidHob (&gUefiAcpiBoardInfoGuid);
+  /*GuidHob = GetFirstGuidHob (&gUefiAcpiBoardInfoGuid);
   if (GuidHob != NULL) {
     AcpiBoardInfo = (ACPI_BOARD_INFO *)GET_GUID_HOB_DATA (GuidHob);
     Status        = PcdSet64S (PcdPciExpressBaseAddress, AcpiBoardInfo->PcieBaseAddress);
     ASSERT_EFI_ERROR (Status);
     Status = PcdSet64S (PcdPciExpressBaseSize, AcpiBoardInfo->PcieBaseSize);
     ASSERT_EFI_ERROR (Status);
-  }
+  }*/
 
   return EFI_SUCCESS;
 }
