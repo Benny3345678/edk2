@@ -48,21 +48,17 @@
   BaseMemoryLib
   DebugLib
   BaseLib
-  SerialPortLib
   IoLib
   HobLib
   PeCoffLib
   CpuLib
   UefiCpuLib
+  ElfLib
 
 [Guids]
   gEfiMemoryTypeInformationGuid
   gEfiFirmwareFileSystem2Guid
-  gEfiGraphicsInfoHobGuid
-  gEfiGraphicsDeviceInfoHobGuid
   gUefiAcpiBoardInfoGuid
-  gEfiSmbiosTableGuid
-  gUefiSerialPortInfoGuid
   gUniversalPayloadExtraDataGuid
   gPcdDataBaseHobGuid
   gUniversalPayloadSmbiosTableGuid
@@ -71,6 +67,7 @@
   gUniversalPayloadPciRootBridgeInfoGuid
   gUniversalPayloadSmbios3TableGuid
   gEdkiiBootManagerMenuFileGuid
+  gUniversalPayloadBaseGuid
 
 [FeaturePcd.IA32]
   gEfiMdeModulePkgTokenSpaceGuid.PcdDxeIplSwitchToLongMode      ## CONSUMES
@@ -97,3 +94,4 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdDxeNxMemoryProtectionPolicy ## SOMETIMES_CONSUMES
   gEfiMdeModulePkgTokenSpaceGuid.PcdImageProtectionPolicy       ## SOMETIMES_CONSUMES
 
+  gUefiPayloadPkgTokenSpaceGuid.PcdUplInterface

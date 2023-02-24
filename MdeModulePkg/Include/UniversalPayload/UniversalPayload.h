@@ -16,6 +16,9 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
 
   @param HobList  Pointer to the beginning of the HOB List from boot loader.
 **/
+
+extern GUID  gUniversalPayloadBaseGuid;
+
 typedef  VOID (EFIAPI *UNIVERSAL_PAYLOAD_ENTRY)(VOID *HobList);
 
 #define UNIVERSAL_PAYLOAD_IDENTIFIER                    SIGNATURE_32('P', 'L', 'D', 'H')
@@ -43,6 +46,11 @@ typedef struct {
   UINT16    Length;
 } UNIVERSAL_PAYLOAD_GENERIC_HEADER;
 
+typedef struct {
+  UNIVERSAL_PAYLOAD_GENERIC_HEADER Header;
+  EFI_PHYSICAL_ADDRESS    Entry;
+} UNIVERSAL_PAYLOAD_BASE;
+
 #pragma pack()
 
 /**
@@ -55,5 +63,7 @@ typedef struct {
 
 **/
 #define UNIVERSAL_PAYLOAD_SIZEOF_THROUGH_FIELD(TYPE, Field)  (OFFSET_OF(TYPE, Field) + sizeof (((TYPE *) 0)->Field))
+
+#define UNIVERSAL_PAYLOAD_BASE_REVISION  1
 
 #endif // UNIVERSAL_PAYLOAD_H_

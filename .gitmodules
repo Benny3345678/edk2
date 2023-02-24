@@ -23,3 +23,6 @@
 [submodule "UnitTestFrameworkPkg/Library/GoogleTestLib/googletest"]
 	path = UnitTestFrameworkPkg/Library/GoogleTestLib/googletest
 	url = https://github.com/google/googletest.git
+[submodule "MdePkg/Library/FdtLib/libfdt"]
+	path = MdePkg/Library/FdtLib/libfdt
+	url = https://github.com/devicetree-org/pylibfdt.git

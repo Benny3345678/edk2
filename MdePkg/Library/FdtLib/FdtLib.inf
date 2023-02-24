@@ -1,0 +1,58 @@
+## @file
+# Flattened Device Tree Library.
+#
+# Copyright (c) 2023, Intel Corporation. All rights reserved.<BR>
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x0001001B
+  BASE_NAME                      = FdtLib
+  MODULE_UNI_FILE                = FdtLib.uni
+  FILE_GUID                      = C64DCB01-B037-4FF6-9CF3-E8CEC206DE04
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = FdtLib
+
+  DEFINE FDT_LIB_PATH            = libfdt
+  DEFINE FDT_LIB_FLAGS           = /wd4146 /wd4244 /wd4245 /wd4267 /wd4307
+
+#
+#  VALID_ARCHITECTURES           = IA32 X64 EBC (EBC is for build only)
+#
+
+[Sources]
+# Wrapper files start #
+  FdtLib.c
+  LibFdtWrapper.c
+# Wrapper files end #
+
+  $(FDT_LIB_PATH)/libfdt/fdt.c
+  $(FDT_LIB_PATH)/libfdt/fdt.h
+  $(FDT_LIB_PATH)/libfdt/fdt_addresses.c
+  $(FDT_LIB_PATH)/libfdt/fdt_check.c
+  $(FDT_LIB_PATH)/libfdt/fdt_empty_tree.c
+  $(FDT_LIB_PATH)/libfdt/fdt_overlay.c
+  $(FDT_LIB_PATH)/libfdt/fdt_ro.c
+  $(FDT_LIB_PATH)/libfdt/fdt_rw.c
+  $(FDT_LIB_PATH)/libfdt/fdt_strerror.c
+  $(FDT_LIB_PATH)/libfdt/fdt_sw.c
+  $(FDT_LIB_PATH)/libfdt/fdt_wip.c
+  $(FDT_LIB_PATH)/libfdt/libfdt.h
+  $(FDT_LIB_PATH)/libfdt/libfdt.i
+  $(FDT_LIB_PATH)/libfdt/libfdt_env.h
+  $(FDT_LIB_PATH)/libfdt/libfdt_internal.h
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+
+
+[BuildOptions]
+  MSFT:*_*_*_CC_FLAGS            = /IMdePkg/Library/FdtLib $(FDT_LIB_FLAGS)

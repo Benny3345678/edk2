@@ -303,6 +303,7 @@
   VariableFlashInfoLib|MdeModulePkg/Library/BaseVariableFlashInfoLib/BaseVariableFlashInfoLib.inf
   CcExitLib|UefiCpuPkg/Library/CcExitLibNull/CcExitLibNull.inf
   ReportStatusCodeLib|MdeModulePkg/Library/DxeReportStatusCodeLib/DxeReportStatusCodeLib.inf
+  ElfLib|UefiPayloadPkg/Library/ElfLib/ElfLib.inf
 
 [LibraryClasses.common]
 !if $(BOOTSPLASH_IMAGE)
@@ -470,6 +471,8 @@
   gEfiCryptoPkgTokenSpaceGuid.PcdCryptoServiceFamilyEnable.TlsGet.Family                            | PCD_CRYPTO_SERVICE_ENABLE_FAMILY
 !endif
 
+  gUefiPayloadPkgTokenSpaceGuid.PcdUplInterface|1
+
 [PcdsPatchableInModule.X64]
   gPcAtChipsetPkgTokenSpaceGuid.PcdRtcIndexRegister|$(RTC_INDEX_REGISTER)
   gPcAtChipsetPkgTokenSpaceGuid.PcdRtcTargetRegister|$(RTC_TARGET_REGISTER)
@@ -588,14 +591,32 @@
 !if "IA32" in "$(ARCH)"
   [Components.IA32]
   !if $(UNIVERSAL_PAYLOAD) == TRUE
-    UefiPayloadPkg/UefiPayloadEntry/UniversalPayloadEntry.inf
+    UefiPayloadPkg/UefiPayloadEntry/UniversalPayloadEntry.inf {
+      <LibraryClasses>
+        !if gUefiPayloadPkgTokenSpaceGuid.PcdUplInterface == 0
+          NULL|UefiPayloadPkg/Library/HobParseLib/HobParseLib.inf
+        !endif
+        !if gUefiPayloadPkgTokenSpaceGuid.PcdUplInterface == 1
+          FdtLib|MdePkg/Library/FdtLib/FdtLib.inf
+          NULL|UefiPayloadPkg/Library/FdtParseLib/FdtParseLib.inf
+        !endif
+    }
   !else
     UefiPayloadPkg/UefiPayloadEntry/UefiPayloadEntry.inf
   !endif
 !else
   [Components.X64]
   !if $(UNIVERSAL_PAYLOAD) == TRUE
-    UefiPayloadPkg/UefiPayloadEntry/UniversalPayloadEntry.inf
+    UefiPayloadPkg/UefiPayloadEntry/UniversalPayloadEntry.inf {
+      <LibraryClasses>
+        !if gUefiPayloadPkgTokenSpaceGuid.PcdUplInterface == 0
+          NULL|UefiPayloadPkg/Library/HobParseLib/HobParseLib.inf
+        !endif
+        !if gUefiPayloadPkgTokenSpaceGuid.PcdUplInterface == 1
+          FdtLib|MdePkg/Library/FdtLib/FdtLib.inf
+          NULL|UefiPayloadPkg/Library/FdtParseLib/FdtParseLib.inf
+        !endif
+    }
   !else
     UefiPayloadPkg/UefiPayloadEntry/UefiPayloadEntry.inf
   !endif
